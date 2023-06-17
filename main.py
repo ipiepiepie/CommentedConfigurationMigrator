@@ -65,12 +65,27 @@ if __name__ == "__main__":
     # create output file
     output = open('output.java', 'w', encoding="utf-8")
 
-    # read settings from config
-    with open('conf.yml', 'r', encoding="utf-8") as file:
-        config = yaml.safe_load(file)
-        # initialise templates
-        parent_node_template = config['parent_node']
-        node_template = config['node']
+    # Create default templates if can't find config.yml
+    if not os.path.exists('config.yml'):
+        parent_node_template = [
+            'private static final TypedValueNode<Object> {name} = node(SimpleNode',
+            '    .builder({path}, Object.class)',
+            '    .build());',
+            ''
+        ]
+        node_template = [
+            'public static final TypedValueNode<{type}> {name} = node(SimpleNode',
+            '    .builder({path}, {type}.class)',
+            '    .defaultValue({value})',
+            '    .build());',
+            ''
+        ]
+    else:  # read settings from config if exists
+        with open('config.yml', 'r', encoding="utf-8") as file:
+            config = yaml.safe_load(file)
+            # initialise templates
+            parent_node_template = config['parent_node']
+            node_template = config['node']
 
     # wait for input
     file_path = input('Enter a file path: ')

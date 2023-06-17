@@ -1,0 +1,31 @@
+# Template, used for parents of YAML blocks
+#
+# They are private for default, because usually
+# we don't need to access it via code.
+#
+# placeholders:
+# · {type} - type of node's value
+# · {name} - formatted name (generated from path)
+# · {path} - path to node in config
+parent_node:
+  - 'private static final TypedValueNode<Object> {name} = node(SimpleNode'
+  - '    .builder({path}, Object.class)'
+  - '    .build());'
+  - ''
+
+# Template, used for nodes with value
+#
+# They are public for default, because usually
+# we access it via code to fetch data from config.
+#
+# placeholders:
+# · {type} - type of node's value
+# · {name} - formatted name (generated from path)
+# · {path} - path to node in config
+# · {value} - default value, fetched from config
+node:
+  - 'public static final TypedValueNode<{type}> {name} = node(SimpleNode'
+  - '    .builder({path}, {type}.class)'
+  - '    .defaultValue({value})'
+  - '    .build());'
+  - ''
