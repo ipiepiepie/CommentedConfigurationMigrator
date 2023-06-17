@@ -1,0 +1,14 @@
+numbers:
+  just_a_number: 10
+  anotherCamelCaseNumber: 8
+
+bool: true
+
+num_list:
+  - 1
+  - 6
+
+str: 'just string'
+list:
+  - 'this is'
+  - 'a list'
